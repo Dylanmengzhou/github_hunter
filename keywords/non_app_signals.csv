@@ -1,0 +1,21 @@
+keyword,notes
+plugin,Flutter/Dart 插件
+library,代码库
+sdk,开发工具包
+framework,框架
+package,包/库
+wrapper,封装库
+binding,绑定层
+extension,扩展
+module,模块
+component,组件库
+widget library,Widget 组件库
+flutter plugin,Flutter 插件明示
+dart package,Dart 包明示
+pub.dev,Pub 包管理平台
+boilerplate,样板代码
+template,模板
+starter,启动模板
+demo,演示项目
+example,示例项目
+sample,样本项目

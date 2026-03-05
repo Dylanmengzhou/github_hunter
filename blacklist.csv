@@ -1,0 +1,16 @@
+repo,reason
+flutter/flutter,官方框架，不是 App
+flutter/packages,官方插件集合
+flutter/samples,官方示例，非真实 App
+dart-lang/dart-pad,在线编辑器工具
+alibaba/flutter_boost,Flutter 混合框架
+google/flutter.widgets,UI 组件库
+invertase/melos,Monorepo 工具
+rrousselGit/riverpod,状态管理框架
+felangel/bloc,状态管理框架
+jonataslaw/getx,状态管理框架
+iampawan/FlutterExampleApps,示例合集，非单一 App
+mitesh77/Best-Flutter-UI-Templates,UI 模板库
+abuanwar072/Flutter-Responsive-Admin-Panel-or-Dashboard,UI 模板
+FilledStacks/flutter-tutorials,教程代码
+ResoCoder/flutter-tdd-clean-architecture-course,教程代码

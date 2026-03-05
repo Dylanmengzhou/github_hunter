@@ -1,0 +1,33 @@
+keyword,notes
+not responding,通用：组件无响应
+no response,通用：没有响应
+unresponsive,通用：无响应
+not clickable,不可点击
+can't click,无法点击
+cannot click,无法点击
+doesn't respond,没有响应
+does not respond,没有响应
+tap not working,点击不生效
+tap doesn't work,点击不生效
+tap does not work,点击不生效
+click not working,点击不生效
+click doesn't work,点击不生效
+click does not work,点击不生效
+button not working,按钮不生效
+button doesn't work,按钮不生效
+gesture not working,手势不生效
+gesture doesn't work,手势不生效
+onpressed,Flutter 按钮回调关键词
+ontap,Flutter 点击回调关键词
+gesturedetector,Flutter 手势检测器
+inkwell,Flutter 水波纹点击组件
+not tappable,不可点按
+tap issue,点击问题
+click issue,点击问题
+press not working,按压不生效
+not pressing,按压无效
+no reaction,没有反应
+no action,没有动作
+nothing happens,什么都没发生
+not interactive,不可交互
+interaction broken,交互已损坏
