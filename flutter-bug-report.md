@@ -1,6 +1,6 @@
 # 🐛 Flutter Android 工具类 App — 点击无响应 Bug 报告
 
-**生成时间：** 2026-03-05 23:51　|　**平台：** Android　|　**仓库数：** 7　|　**Bug 总计：** 23 条
+**生成时间：** 2026-03-06 10:32　|　**平台：** Android　|　**仓库数：** 7　|　**Bug 总计：** 23 条
 
 > 仅收录「点击 / 点按 没有反应」类交互 bug，且 issue 中必须明确提及 **Android** 平台。
 
@@ -10,11 +10,11 @@
 
 | 排名 | 仓库 | ⭐ Stars | 🐛 点击Bug | 📦 近期版本 | 综合得分 |
 |:---:|:---|---:|:---:|:---:|:---:|
-| 1 | [media-kit/media-kit](https://github.com/media-kit/media-kit) | 1,692 | 12 | 0 | 0.630 |
+| 1 | [media-kit/media-kit](https://github.com/media-kit/media-kit) | 1,691 | 12 | 0 | 0.630 |
 | 2 | [florent37/Flutter-AssetsAudioPlayer](https://github.com/florent37/Flutter-AssetsAudioPlayer) | 773 | 5 | 0 | 0.615 |
 | 3 | [simonoppowa/OpenNutriTracker](https://github.com/simonoppowa/OpenNutriTracker) | 1,607 | 1 | 3 | 0.578 |
-| 4 | [namidaco/namida](https://github.com/namidaco/namida) | 5,053 | 1 | 4 | 0.578 |
-| 5 | [ubuntu-flutter-community/musicpod](https://github.com/ubuntu-flutter-community/musicpod) | 624 | 1 | 11 | 0.577 |
+| 4 | [namidaco/namida](https://github.com/namidaco/namida) | 5,054 | 1 | 4 | 0.578 |
+| 5 | [ubuntu-flutter-community/musicpod](https://github.com/ubuntu-flutter-community/musicpod) | 623 | 1 | 11 | 0.577 |
 | 6 | [nt4f04uNd/sweyer](https://github.com/nt4f04uNd/sweyer) | 216 | 2 | 1 | 0.467 |
 | 7 | [moritz-weber/mucke](https://github.com/moritz-weber/mucke) | 251 | 1 | 0 | 0.452 |
 
@@ -28,7 +28,7 @@
 
 | 项目 | 数值 |
 |------|------|
-| ⭐ Stars | 1,692 |
+| ⭐ Stars | 1,691 |
 | 📋 Open Issues | 289 条 |
 | 🐛 点击无响应 Bug | **12 条** |
 | 📦 近期版本（1 年内）| 0 个 |
@@ -129,7 +129,7 @@
 
 | 项目 | 数值 |
 |------|------|
-| ⭐ Stars | 5,053 |
+| ⭐ Stars | 5,054 |
 | 📋 Open Issues | 125 条 |
 | 🐛 点击无响应 Bug | **1 条** |
 | 📦 近期版本（1 年内）| 4 个 |
@@ -160,7 +160,7 @@
 
 | 项目 | 数值 |
 |------|------|
-| ⭐ Stars | 624 |
+| ⭐ Stars | 623 |
 | 📋 Open Issues | 53 条 |
 | 🐛 点击无响应 Bug | **1 条** |
 | 📦 近期版本（1 年内）| 11 个 |

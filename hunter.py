@@ -48,12 +48,12 @@ def _env_get(key, default):
     return int(val) if isinstance(default, int) else val
 
 
-def _load_csv_keywords(filename: str, fallback: list) -> list:
+def _load_csv_keywords(filename: str) -> list:
     """Load first column from keywords/{filename}.csv, skip header row."""
     csv_path = Path(__file__).parent / "keywords" / filename
     if not csv_path.exists():
-        print(f"[warn] keywords/{filename} 不存在，使用内置默认值", file=sys.stderr)
-        return fallback
+        print(f"[warn] keywords/{filename} 不存在，该关键词列表为空", file=sys.stderr)
+        return []
     keywords = []
     with csv_path.open(encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
@@ -61,7 +61,9 @@ def _load_csv_keywords(filename: str, fallback: list) -> list:
             kw = row.get("keyword", "").strip()
             if kw:
                 keywords.append(kw)
-    return keywords if keywords else fallback
+    if not keywords:
+        print(f"[warn] keywords/{filename} 为空文件，该关键词列表为空", file=sys.stderr)
+    return keywords
 
 
 def _load_blacklist() -> set:
@@ -81,47 +83,12 @@ def _load_blacklist() -> set:
 
 # ─────────────── Keywords — sourced from keywords/*.csv ─────────────────── #
 
-INTERACTION_KEYWORDS = _load_csv_keywords("interaction.csv", [
-    "not responding", "no response", "unresponsive",
-    "not clickable", "can't click", "cannot click",
-    "tap not working", "click not working",
-    "button not working", "gesture not working",
-    "onpressed", "ontap", "gesturedetector", "inkwell",
-    "no reaction", "no action", "nothing happens",
-    "not interactive", "interaction broken",
-])
-
-ANDROID_KEYWORDS = _load_csv_keywords("android.csv", [
-    "android", "androidx", "gradle", "apk", "aab",
-    "material", "jetpack", "playstore", "play store",
-])
-
-IOS_KEYWORDS = _load_csv_keywords("ios.csv", [
-    "ios", "iphone", "ipad", "xcode", "swift",
-    "appstore", "app store", "cupertino", "uikit",
-])
-
-TOOL_APP_KEYWORDS = _load_csv_keywords("tool_app.csv", [
-    "fitness", "workout", "diet", "nutrition", "food", "meal",
-    "habit", "todo", "task manager", "reminder", "journal", "diary",
-    "calculator", "finance", "budget", "expense",
-    "music player", "audio player", "podcast", "radio",
-    "timer", "stopwatch", "alarm", "gallery", "photo", "weather app",
-])
-
-NON_APP_SIGNALS = _load_csv_keywords("non_app_signals.csv", [
-    "plugin", "library", "sdk", "framework", "package", "wrapper",
-    "binding", "extension", "module", "component",
-    "flutter plugin", "dart package", "pub.dev",
-    "boilerplate", "template", "starter", "demo", "example", "sample",
-])
-
-TOOL_CATEGORIES = _load_csv_keywords("tool_categories.csv", [
-    "fitness", "workout", "diet nutrition", "food tracker",
-    "habit tracker", "todo app", "music player", "audio player",
-    "calculator", "budget expense", "journal diary",
-    "timer stopwatch", "photo gallery", "weather",
-])
+INTERACTION_KEYWORDS = _load_csv_keywords("interaction.csv")
+ANDROID_KEYWORDS    = _load_csv_keywords("android.csv")
+IOS_KEYWORDS        = _load_csv_keywords("ios.csv")
+TOOL_APP_KEYWORDS   = _load_csv_keywords("tool_app.csv")
+NON_APP_SIGNALS     = _load_csv_keywords("non_app_signals.csv")
+TOOL_CATEGORIES     = _load_csv_keywords("tool_categories.csv")
 
 BLACKLIST = _load_blacklist()
 
