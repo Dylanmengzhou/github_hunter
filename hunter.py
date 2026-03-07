@@ -40,6 +40,9 @@ def load_env():
 
 ENV = load_env()
 
+# Global edit-distance cap read once at startup
+_EDIT_DISTANCE_MAX: int = int(ENV.get("EDIT_DISTANCE_THRESHOLD", 2))
+
 
 def _env_get(key, default):
     val = ENV.get(key)
@@ -81,6 +84,36 @@ def _load_blacklist() -> set:
     return repos
 
 
+def _append_to_blacklist(new_entries: list[tuple[str, str]]) -> int:
+    """Append (repo, reason) pairs to blacklist.csv, skipping already-listed repos.
+
+    Returns the number of newly appended rows.
+    """
+    if not new_entries:
+        return 0
+
+    bl_path = Path(__file__).parent / "blacklist.csv"
+    existing = _load_blacklist()
+
+    to_write = [
+        (repo, reason)
+        for repo, reason in new_entries
+        if repo.lower() not in existing
+    ]
+    if not to_write:
+        return 0
+
+    needs_header = not bl_path.exists() or bl_path.stat().st_size == 0
+    with bl_path.open("a", encoding="utf-8", newline="") as f:
+        writer = csv.writer(f)
+        if needs_header:
+            writer.writerow(["repo", "reason"])
+        for repo, reason in to_write:
+            writer.writerow([repo, reason])
+
+    return len(to_write)
+
+
 # ─────────────── Keywords — sourced from keywords/*.csv ─────────────────── #
 
 INTERACTION_KEYWORDS = _load_csv_keywords("interaction.csv")
@@ -111,17 +144,19 @@ def edit_distance(a: str, b: str) -> int:
 
 
 def _threshold(kw: str) -> int:
-    """Allowed edit distance based on keyword length.
+    """Allowed edit distance based on keyword length, capped by EDIT_DISTANCE_THRESHOLD.
     ≤4 chars  → 0 (exact only, avoids false positives on short words)
     5-8 chars → 1 (one typo allowed)
     ≥9 chars  → 2 (two typos allowed)
     """
     n = len(kw)
     if n <= 4:
-        return 0
-    if n <= 8:
-        return 1
-    return 2
+        base = 0
+    elif n <= 8:
+        base = 1
+    else:
+        base = 2
+    return min(base, _EDIT_DISTANCE_MAX)
 
 
 def fuzzy_match(text: str, keywords: list) -> bool:
@@ -506,6 +541,8 @@ def main():
     log(f"共抓取 {len(items)} 个候选仓库")
 
     results = []
+    skipped_for_blacklist: list[tuple[str, str]] = []
+
     for item in items:
         repo_name = item.get("full_name", "?")
         estimated_issues = item.get("open_issues_count", 0)
@@ -515,12 +552,15 @@ def main():
             continue
         if estimated_issues < args.min_issues:
             log(f"  跳过  {repo_name}  (issues={estimated_issues})")
+            skipped_for_blacklist.append((repo_name, f"issues不足({estimated_issues}<{args.min_issues})"))
             continue
         if not is_platform_repo(item, args.platform):
             log(f"  跳过  {repo_name}  (非 {args.platform} 仓库)")
+            skipped_for_blacklist.append((repo_name, f"非{args.platform}仓库"))
             continue
         if not is_tool_app(item):
             log(f"  跳过  {repo_name}  (非工具类 App)")
+            skipped_for_blacklist.append((repo_name, "非工具类App"))
             continue
 
         log(f"  分析  {repo_name}  (~{estimated_issues} issues) ...")
@@ -548,6 +588,10 @@ def main():
 
         if len(results) >= args.limit * 3:
             break
+
+    added = _append_to_blacklist(skipped_for_blacklist)
+    if added:
+        log(f"\n📋 已将 {added} 个跳过的仓库自动追加到 blacklist.csv")
 
     results.sort(key=lambda x: x["score"], reverse=True)
     results = results[: args.limit]
