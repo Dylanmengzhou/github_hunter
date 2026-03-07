@@ -1,0 +1,25 @@
+[project]
+name = "project-hunter"
+version = "0.1.2"
+description = "Flutter 工具类 App 点击无响应 Bug 猎手 — 自动搜索 GitHub 上的 UI 交互 bug"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+keywords = ["flutter", "github", "bug", "cli", "dart"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Software Development :: Bug Tracking",
+]
+dependencies = ["typer"]
+
+[project.scripts]
+project-hunter = "hunter:app"
+
+[tool.setuptools]
+py-modules = ["hunter"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

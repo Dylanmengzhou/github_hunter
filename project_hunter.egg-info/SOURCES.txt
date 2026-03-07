@@ -1,0 +1,9 @@
+README.md
+hunter.py
+pyproject.toml
+project_hunter.egg-info/PKG-INFO
+project_hunter.egg-info/SOURCES.txt
+project_hunter.egg-info/dependency_links.txt
+project_hunter.egg-info/entry_points.txt
+project_hunter.egg-info/requires.txt
+project_hunter.egg-info/top_level.txt

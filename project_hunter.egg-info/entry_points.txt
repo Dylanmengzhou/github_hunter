@@ -1,0 +1,2 @@
+[console_scripts]
+project-hunter = hunter:app

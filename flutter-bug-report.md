@@ -1,6 +1,6 @@
 # 🐛 Flutter Android 工具类 App — 点击无响应 Bug 报告
 
-**生成时间：** 2026-03-06 10:32　|　**平台：** Android　|　**仓库数：** 7　|　**Bug 总计：** 23 条
+**生成时间：** 2026-03-08 01:32　|　**平台：** Android　|　**仓库数：** 7　|　**Bug 总计：** 23 条
 
 > 仅收录「点击 / 点按 没有反应」类交互 bug，且 issue 中必须明确提及 **Android** 平台。
 
@@ -10,11 +10,11 @@
 
 | 排名 | 仓库 | ⭐ Stars | 🐛 点击Bug | 📦 近期版本 | 综合得分 |
 |:---:|:---|---:|:---:|:---:|:---:|
-| 1 | [media-kit/media-kit](https://github.com/media-kit/media-kit) | 1,691 | 12 | 0 | 0.630 |
+| 1 | [media-kit/media-kit](https://github.com/media-kit/media-kit) | 1,694 | 12 | 0 | 0.630 |
 | 2 | [florent37/Flutter-AssetsAudioPlayer](https://github.com/florent37/Flutter-AssetsAudioPlayer) | 773 | 5 | 0 | 0.615 |
-| 3 | [simonoppowa/OpenNutriTracker](https://github.com/simonoppowa/OpenNutriTracker) | 1,607 | 1 | 3 | 0.578 |
-| 4 | [namidaco/namida](https://github.com/namidaco/namida) | 5,054 | 1 | 4 | 0.578 |
-| 5 | [ubuntu-flutter-community/musicpod](https://github.com/ubuntu-flutter-community/musicpod) | 623 | 1 | 11 | 0.577 |
+| 3 | [simonoppowa/OpenNutriTracker](https://github.com/simonoppowa/OpenNutriTracker) | 1,611 | 1 | 3 | 0.578 |
+| 4 | [ubuntu-flutter-community/musicpod](https://github.com/ubuntu-flutter-community/musicpod) | 623 | 1 | 11 | 0.577 |
+| 5 | [namidaco/namida](https://github.com/namidaco/namida) | 5,062 | 1 | 3 | 0.569 |
 | 6 | [nt4f04uNd/sweyer](https://github.com/nt4f04uNd/sweyer) | 216 | 2 | 1 | 0.467 |
 | 7 | [moritz-weber/mucke](https://github.com/moritz-weber/mucke) | 251 | 1 | 0 | 0.452 |
 
@@ -28,7 +28,7 @@
 
 | 项目 | 数值 |
 |------|------|
-| ⭐ Stars | 1,691 |
+| ⭐ Stars | 1,694 |
 | 📋 Open Issues | 289 条 |
 | 🐛 点击无响应 Bug | **12 条** |
 | 📦 近期版本（1 年内）| 0 个 |
@@ -98,7 +98,7 @@
 
 | 项目 | 数值 |
 |------|------|
-| ⭐ Stars | 1,607 |
+| ⭐ Stars | 1,611 |
 | 📋 Open Issues | 141 条 |
 | 🐛 点击无响应 Bug | **1 条** |
 | 📦 近期版本（1 年内）| 3 个 |
@@ -123,38 +123,7 @@
 
 ---
 
-### #4 [namidaco/namida](https://github.com/namidaco/namida)
-
-> A Beautiful and Feature-rich Music & Video Player with Youtube Support, Built in Flutter
-
-| 项目 | 数值 |
-|------|------|
-| ⭐ Stars | 5,054 |
-| 📋 Open Issues | 125 条 |
-| 🐛 点击无响应 Bug | **1 条** |
-| 📦 近期版本（1 年内）| 4 个 |
-| 🏆 综合得分 | `0.578` |
-
-#### 🖱 点击 / 点按无响应 Bug（1 条）
-
-| Issue 标题 | 时间 | 链接 |
-|:----------|:----:|:----:|
-| [FEATURE REQUEST] Direct usb access | 2025-12-23 | [查看](https://github.com/namidaco/namida/issues/790) |
-
-#### 📦 版本记录（共 18 个，展示最近 6 个）
-
-| 版本 | 发布时间 | 状态 | 更新摘要 |
-|:-----|:--------:|:----:|:--------|
-| [v5.6.1](https://github.com/namidaco/namida/releases/tag/v5.6.1) | 2026-01-01 | ✅ 近期 | ## happy new year everyone! new version here with some cool new features and many changes and improv |
-| [v5.3.9](https://github.com/namidaco/namida/releases/tag/v5.3.9) | 2025-09-03 | ✅ 近期 | ## hey guys, small update here ^^ new features and lots of improvements, also an integration with [n |
-| [v5.2.6](https://github.com/namidaco/namida/releases/tag/v5.2.6) | 2025-07-08 | ✅ 近期 | hey guys ^^ its been a while  new update is here, in this one i focused a lot about app performanc |
-| [v5.0.4](https://github.com/namidaco/namida/releases/tag/v5.0.4) | 2025-03-06 | ✅ 近期 | ### v5 with some hot new features! 🔥  ### 🎉 New Features:    - c92a8a3: headset buttons (single/d |
-| [v4.8.6](https://github.com/namidaco/namida/releases/tag/v4.8.6) | 2025-01-01 | ⬜ 旧版 | happi new year cuties <3  new veersion for ya with cool features and maany tweaks n fixes, enjoy!  |
-| [v4.7.2](https://github.com/namidaco/namida/releases/tag/v4.7.2) | 2024-11-22 | ⬜ 旧版 | ### 🎉 New Features:    - dfaf5f5: local video library & playback this also includes - refactor for  |
-
----
-
-### #5 [ubuntu-flutter-community/musicpod](https://github.com/ubuntu-flutter-community/musicpod)
+### #4 [ubuntu-flutter-community/musicpod](https://github.com/ubuntu-flutter-community/musicpod)
 
 > Music, radio, television and podcast player for Ubuntu, MacOs and maybe soon Android
 
@@ -182,6 +151,37 @@
 | [v2.12.0](https://github.com/ubuntu-flutter-community/musicpod/releases/tag/v2.12.0) | 2025-05-13 | ✅ 近期 | ## [2.12.0](https://github.com/ubuntu-flutter-community/musicpod/compare/v2.11.4...v2.12.0) (2025-05 |
 | [v2.11.4](https://github.com/ubuntu-flutter-community/musicpod/releases/tag/v2.11.4) | 2025-04-30 | ✅ 近期 | ## [2.11.4](https://github.com/ubuntu-flutter-community/musicpod/compare/v2.11.3...v2.11.4) (2025-04 |
 | [v2.11.3](https://github.com/ubuntu-flutter-community/musicpod/releases/tag/v2.11.3) | 2025-04-30 | ✅ 近期 | ## [2.11.3](https://github.com/ubuntu-flutter-community/musicpod/compare/v2.11.2...v2.11.3) (2025-04 |
+
+---
+
+### #5 [namidaco/namida](https://github.com/namidaco/namida)
+
+> A Beautiful and Feature-rich Music & Video Player with Youtube Support, Built in Flutter
+
+| 项目 | 数值 |
+|------|------|
+| ⭐ Stars | 5,062 |
+| 📋 Open Issues | 129 条 |
+| 🐛 点击无响应 Bug | **1 条** |
+| 📦 近期版本（1 年内）| 3 个 |
+| 🏆 综合得分 | `0.569` |
+
+#### 🖱 点击 / 点按无响应 Bug（1 条）
+
+| Issue 标题 | 时间 | 链接 |
+|:----------|:----:|:----:|
+| [FEATURE REQUEST] Direct usb access | 2025-12-23 | [查看](https://github.com/namidaco/namida/issues/790) |
+
+#### 📦 版本记录（共 18 个，展示最近 6 个）
+
+| 版本 | 发布时间 | 状态 | 更新摘要 |
+|:-----|:--------:|:----:|:--------|
+| [v5.6.1](https://github.com/namidaco/namida/releases/tag/v5.6.1) | 2026-01-01 | ✅ 近期 | ## happy new year everyone! new version here with some cool new features and many changes and improv |
+| [v5.3.9](https://github.com/namidaco/namida/releases/tag/v5.3.9) | 2025-09-03 | ✅ 近期 | ## hey guys, small update here ^^ new features and lots of improvements, also an integration with [n |
+| [v5.2.6](https://github.com/namidaco/namida/releases/tag/v5.2.6) | 2025-07-08 | ✅ 近期 | hey guys ^^ its been a while  new update is here, in this one i focused a lot about app performanc |
+| [v5.0.4](https://github.com/namidaco/namida/releases/tag/v5.0.4) | 2025-03-06 | ⬜ 旧版 | ### v5 with some hot new features! 🔥  ### 🎉 New Features:    - c92a8a3: headset buttons (single/d |
+| [v4.8.6](https://github.com/namidaco/namida/releases/tag/v4.8.6) | 2025-01-01 | ⬜ 旧版 | happi new year cuties <3  new veersion for ya with cool features and maany tweaks n fixes, enjoy!  |
+| [v4.7.2](https://github.com/namidaco/namida/releases/tag/v4.7.2) | 2024-11-22 | ⬜ 旧版 | ### 🎉 New Features:    - dfaf5f5: local video library & playback this also includes - refactor for  |
 
 ---
 

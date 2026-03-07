@@ -1,0 +1,72 @@
+Metadata-Version: 2.4
+Name: project-hunter
+Version: 0.1.2
+Summary: Flutter 工具类 App 点击无响应 Bug 猎手 — 自动搜索 GitHub 上的 UI 交互 bug
+License: MIT
+Keywords: flutter,github,bug,cli,dart
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Environment :: Console
+Classifier: Topic :: Software Development :: Bug Tracking
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: typer
+
+# project-hunter
+
+Flutter 工具类 App 点击无响应 Bug 猎手 — 自动搜索 GitHub 上的 UI 交互 bug。
+
+## 安装
+
+```bash
+pip install project-hunter
+```
+
+需要先登录 GitHub CLI：
+
+```bash
+gh auth login
+```
+
+## 用法
+
+```bash
+project-hunter run                                  # 用 .env 默认参数
+project-hunter run --platform ios                   # 只看 iOS bug
+project-hunter run --limit 20                       # 输出 20 个仓库
+project-hunter run --output-format json             # JSON 格式
+project-hunter run --save-path ~/Desktop/report.md  # 指定保存路径
+project-hunter run --help                           # 查看所有选项
+```
+
+## 配置
+
+`.env` 文件按以下优先级查找：
+1. **当前目录** `./.env`（推荐，项目级配置）
+2. **全局配置** `~/.config/project-hunter/.env`（所有目录通用）
+
+创建全局配置：
+
+```bash
+mkdir -p ~/.config/project-hunter
+cat > ~/.config/project-hunter/.env << 'EOF'
+PLATFORM=android
+MIN_ISSUES=50
+LIMIT=10
+SAVE_PATH=~/Documents/flutter-bug-report.md
+EOF
+```
+
+或在当前目录创建 `.env` 文件：
+
+```ini
+PLATFORM=android          # android | ios | all
+MIN_ISSUES=50
+LIMIT=10
+CANDIDATES=140
+MAX_ISSUE_PAGES=3
+MAX_RELEASE_PAGES=2
+OUTPUT_FORMAT=md          # md | json | text
+SAVE_PATH=                # 留空 = 当前目录 flutter-bug-report.md
+EDIT_DISTANCE_THRESHOLD=2
+```
