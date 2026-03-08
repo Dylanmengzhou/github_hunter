@@ -64,10 +64,12 @@ _EDIT_DISTANCE_MAX: int = int(ENV.get("EDIT_DISTANCE_THRESHOLD", 2))
 
 # ──────────────────────────── CLI Enums ──────────────────────────────────── #
 
-class Platform(str, Enum):
-    android = "android"
-    ios = "ios"
-    all = "all"
+class Framework(str, Enum):
+    flutter      = "flutter"
+    android      = "android"
+    react_native = "react-native"
+    ios          = "ios"
+    all          = "all"
 
 
 class OutputFormat(str, Enum):
@@ -240,6 +242,56 @@ weather app,天气 App
 flashcard,闪卡记忆
 language learning,语言学习
 """,
+    "framework_flutter.csv": """keyword,notes
+flutter,Flutter 框架核心词
+dart,Dart 语言
+pubspec,Flutter 依赖配置文件
+flutter sdk,Flutter SDK
+statefulwidget,Flutter 有状态组件
+statelesswidget,Flutter 无状态组件
+getx,GetX 状态管理
+bloc,BLoC 状态管理
+riverpod,Riverpod 状态管理
+provider,Provider 状态管理
+pub.dev,Dart 包管理平台
+""",
+    "framework_android.csv": """keyword,notes
+kotlin,Android 主流语言
+java,Android 传统语言
+gradle,Android 构建系统
+android studio,Android 开发工具
+jetpack compose,Android 声明式 UI
+androidx,AndroidX 支持库
+activity,Android 页面组件
+fragment,Android 片段组件
+apk,Android 安装包
+aab,Android App Bundle
+coroutines,Kotlin 协程
+""",
+    "framework_react_native.csv": """keyword,notes
+react native,React Native 框架
+react-native,React Native 框架（连字符）
+expo,Expo 开发平台
+metro,Metro 打包工具
+javascript,JS 语言
+typescript,TS 语言
+rn,React Native 缩写
+reactnative,React Native 无空格写法
+navigation,React Navigation
+redux,Redux 状态管理
+""",
+    "framework_ios.csv": """keyword,notes
+swift,iOS 主流语言
+swiftui,SwiftUI 声明式 UI
+uikit,UIKit 传统 UI 框架
+xcode,iOS 开发工具
+cocoapods,iOS 依赖管理
+objective-c,iOS 传统语言
+storyboard,iOS 界面设计文件
+appstore,苹果应用商店
+testflight,苹果公测平台
+combine,Combine 响应式框架
+""",
     "tool_categories.csv": """keyword,notes
 fitness,健身 App 搜索词
 workout,锻炼 App 搜索词
@@ -355,12 +407,17 @@ def _append_to_blacklist(new_entries: list[tuple[str, str]]) -> int:
 
 _init_config_dir()
 
-INTERACTION_KEYWORDS = _load_csv_keywords("interaction.csv")
-ANDROID_KEYWORDS    = _load_csv_keywords("android.csv")
-IOS_KEYWORDS        = _load_csv_keywords("ios.csv")
-TOOL_APP_KEYWORDS   = _load_csv_keywords("tool_app.csv")
-NON_APP_SIGNALS     = _load_csv_keywords("non_app_signals.csv")
-TOOL_CATEGORIES     = _load_csv_keywords("tool_categories.csv")
+INTERACTION_KEYWORDS    = _load_csv_keywords("interaction.csv")
+TOOL_APP_KEYWORDS       = _load_csv_keywords("tool_app.csv")
+NON_APP_SIGNALS         = _load_csv_keywords("non_app_signals.csv")
+TOOL_CATEGORIES         = _load_csv_keywords("tool_categories.csv")
+
+FRAMEWORK_KEYWORDS: dict[str, list] = {
+    "flutter":      _load_csv_keywords("framework_flutter.csv"),
+    "android":      _load_csv_keywords("framework_android.csv"),
+    "react-native": _load_csv_keywords("framework_react_native.csv"),
+    "ios":          _load_csv_keywords("framework_ios.csv"),
+}
 
 BLACKLIST = _load_blacklist()
 
@@ -515,11 +572,11 @@ def is_tool_app(item) -> bool:
     return fuzzy_match(text, TOOL_APP_KEYWORDS)
 
 
-def is_platform_repo(item, platform: str) -> bool:
-    """Check that the repo targets the given platform."""
-    if platform == "all":
+def is_framework_repo(item, framework: str) -> bool:
+    """Check that the repo uses the given framework/language stack."""
+    if framework == "all":
         return True
-    keywords = ANDROID_KEYWORDS if platform == "android" else IOS_KEYWORDS
+    keywords = FRAMEWORK_KEYWORDS.get(framework, [])
     return fuzzy_match(_repo_text(item), keywords)
 
 
@@ -546,7 +603,7 @@ def is_platform_interaction_issue(title: str, body: str, platform: str) -> bool:
 
 # ──────────────────────── Core analysis ──────────────────────────────────── #
 
-def analyze_repo(item, platform: str, max_issue_pages: int, max_release_pages: int):
+def analyze_repo(item, framework: str, max_issue_pages: int, max_release_pages: int):
     owner_repo = item["full_name"]
     stars = item.get("stargazers_count", 0)
 
@@ -557,7 +614,7 @@ def analyze_repo(item, platform: str, max_issue_pages: int, max_release_pages: i
     for issue in issues:
         title = issue.get("title") or ""
         body = issue.get("body") or ""
-        if is_platform_interaction_issue(title, body, platform):
+        if is_framework_interaction_issue(title, body, framework):
             interaction_issues.append({
                 "title": title,
                 "url": issue.get("html_url") or "",
@@ -616,8 +673,8 @@ def analyze_repo(item, platform: str, max_issue_pages: int, max_release_pages: i
 
 # ─────────────────── Markdown 输出（一目了然，中文）────────────────────────── #
 
-def render_md(results, platform: str, generated_at: str) -> str:
-    platform_cn = {"android": "Android", "ios": "iOS", "all": "全平台"}.get(platform, platform)
+def render_md(results, framework: str, generated_at: str) -> str:
+    platform_cn = {"flutter": "Flutter", "android": "Android Native", "react-native": "React Native", "ios": "iOS Native", "all": "全平台"}.get(framework, framework)
     total_bugs = sum(r["interaction_issues_count"] for r in results)
 
     L = []
@@ -627,13 +684,13 @@ def render_md(results, platform: str, generated_at: str) -> str:
     L.append("")
     L.append(
         f"**生成时间：** {generated_at}"
-        f"　|　**平台：** {platform_cn}"
+        f"　|　**框架：** {platform_cn}"
         f"　|　**仓库数：** {len(results)}"
         f"　|　**Bug 总计：** {total_bugs} 条"
     )
     L.append("")
     L.append("> 仅收录「点击 / 点按 没有反应」类交互 bug，"
-             f"且 issue 中必须明确提及 **{platform_cn}** 平台。")
+             f"且 issue 中必须明确提及 **{platform_cn}** 相关词汇。")
     L.append("")
     L.append("---")
     L.append("")
@@ -727,8 +784,8 @@ def run_command(
     query: Optional[str] = typer.Option(
         None, help="自定义 GitHub 搜索 query（覆盖分类搜索）"
     ),
-    platform: Platform = typer.Option(
-        _env_get("PLATFORM", "android"), help="目标平台"
+    framework: Framework = typer.Option(
+        _env_get("FRAMEWORK", "flutter"), help="目标框架：flutter / android / react-native / ios / all"
     ),
     limit: int = typer.Option(
         _env_get("LIMIT", 10), help="输出仓库数量"
@@ -759,7 +816,7 @@ def run_command(
         log(f"  → 在配置目录创建 .env: touch {CONFIG_DIR}/.env")
     log(f"  keywords/ : {CONFIG_DIR / 'keywords'}  (可编辑关键词)")
     log(f"  blacklist : {CONFIG_DIR / 'blacklist.csv'}  (可编辑黑名单)")
-    log(f"平台        : {platform}")
+    log(f"框架        : {framework}")
     log(f"最少 issues : {min_issues}  |  目标数量 : {limit}")
     log(f"Issues 翻页 : 最多 {max_issue_pages} 页 × 100 = {max_issue_pages * 100} 条/仓库")
     log(f"Releases 翻页: 最多 {max_release_pages} 页 × 30 = {max_release_pages * 30} 条/仓库")
@@ -772,13 +829,22 @@ def run_command(
     if query is not None:
         search_queries = [query]
     else:
-        plat = ""
-        if platform == Platform.android:
-            plat = "android "
-        elif platform == Platform.ios:
-            plat = "ios "
+        _lang_map = {
+            "flutter":      [("flutter", "language:dart")],
+            "android":      [("android", "language:kotlin"), ("android", "language:java")],
+            "react-native": [("react-native", "language:javascript"), ("react-native", "language:typescript")],
+            "ios":          [("ios swift", "language:swift")],
+            "all":          [
+                ("flutter", "language:dart"),
+                ("android", "language:kotlin"),
+                ("react-native", "language:javascript"),
+                ("ios swift", "language:swift"),
+            ],
+        }
+        pairs = _lang_map.get(framework.value, _lang_map["flutter"])
         search_queries = [
-            f"flutter {plat}{cat} language:dart stars:>30"
+            f"{prefix} {cat} {lang} stars:>30"
+            for prefix, lang in pairs
             for cat in TOOL_CATEGORIES
         ]
 
@@ -800,9 +866,9 @@ def run_command(
             log(f"  跳过  {repo_name}  (issues={estimated_issues})")
             skipped_for_blacklist.append((repo_name, f"issues不足({estimated_issues}<{min_issues})"))
             continue
-        if not is_platform_repo(item, platform):
-            log(f"  跳过  {repo_name}  (非 {platform} 仓库)")
-            skipped_for_blacklist.append((repo_name, f"非{platform}仓库"))
+        if not is_framework_repo(item, framework):
+            log(f"  跳过  {repo_name}  (非 {framework} 仓库)")
+            skipped_for_blacklist.append((repo_name, f"非{framework}仓库"))
             continue
         if not is_tool_app(item):
             log(f"  跳过  {repo_name}  (非工具类 App)")
@@ -813,7 +879,7 @@ def run_command(
         try:
             r = analyze_repo(
                 item,
-                platform=platform,
+                framework=framework,
                 max_issue_pages=max_issue_pages,
                 max_release_pages=max_release_pages,
             )
@@ -827,7 +893,7 @@ def run_command(
 
         log(
             f"    ✓  issues={r['issue_count']}"
-            f"  {platform}交互bug={r['interaction_issues_count']}"
+            f"  {framework}交互bug={r['interaction_issues_count']}"
             f"  得分={r['score']}"
         )
         results.append(r)
@@ -848,7 +914,7 @@ def run_command(
         print(json.dumps(results, indent=2, ensure_ascii=False))
 
     elif output_format == OutputFormat.md:
-        md = render_md(results, platform, generated_at)
+        md = render_md(results, framework, generated_at)
         md_path = save_path.strip()
         if not md_path:
             md_path = str(Path(__file__).parent / "flutter-bug-report.md")
@@ -861,7 +927,8 @@ def run_command(
 
     else:  # text
         print(f"\n{'=' * 70}")
-        print(f"  Flutter {platform.upper()} 工具类 App 点击无响应 Bug — {len(results)} 个仓库")
+        fw_name = {"flutter": "Flutter", "android": "Android Native", "react-native": "React Native", "ios": "iOS Native", "all": "全平台"}.get(framework.value, framework.value)
+        print(f"  {fw_name} 工具类 App 点击无响应 Bug — {len(results)} 个仓库")
         print(f"  生成时间: {generated_at}")
         print(f"{'=' * 70}\n")
         for idx, r in enumerate(results, 1):

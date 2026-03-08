@@ -1,6 +1,6 @@
 # project-hunter
 
-Flutter 工具类 App 点击无响应 Bug 猎手 — 自动搜索 GitHub 上的 UI 交互 bug。
+移动端工具类 App 点击无响应 Bug 猎手 — 自动在 GitHub 上搜索 Flutter、Android Native、React Native、iOS 项目的 UI 交互 bug。
 
 ## 安装
 
@@ -17,12 +17,15 @@ gh auth login
 ## 用法
 
 ```bash
-project-hunter run                                  # 用 .env 默认参数
-project-hunter run --platform ios                   # 只看 iOS bug
-project-hunter run --limit 20                       # 输出 20 个仓库
-project-hunter run --output-format json             # JSON 格式
-project-hunter run --save-path ~/Desktop/report.md  # 指定保存路径
-project-hunter run --help                           # 查看所有选项
+project-hunter run                                    # 用 .env 默认参数（flutter）
+project-hunter run --framework android                # Android Native
+project-hunter run --framework react-native           # React Native
+project-hunter run --framework ios                    # iOS Native
+project-hunter run --framework all                    # 全框架
+project-hunter run --limit 20                         # 输出 20 个仓库
+project-hunter run --output-format json               # JSON 格式
+project-hunter run --save-path ~/Desktop/report.md    # 指定保存路径
+project-hunter run --help                             # 查看所有选项
 ```
 
 ## 配置
@@ -36,24 +39,24 @@ project-hunter run --help                           # 查看所有选项
 ```bash
 mkdir -p ~/.config/project-hunter
 cat > ~/.config/project-hunter/.env << 'EOF'
-PLATFORM=android
+FRAMEWORK=flutter
 MIN_ISSUES=50
 LIMIT=10
-SAVE_PATH=~/Documents/flutter-bug-report.md
+SAVE_PATH=~/Documents/bug-report.md
 EOF
 ```
 
 或在当前目录创建 `.env` 文件：
 
 ```ini
-PLATFORM=android          # android | ios | all
+FRAMEWORK=flutter         # flutter | android | react-native | ios | all
 MIN_ISSUES=50
 LIMIT=10
 CANDIDATES=140
 MAX_ISSUE_PAGES=3
 MAX_RELEASE_PAGES=2
 OUTPUT_FORMAT=md          # md | json | text
-SAVE_PATH=                # 留空 = 当前目录 flutter-bug-report.md
+SAVE_PATH=                # 留空 = 当前目录 bug-report.md
 EDIT_DISTANCE_THRESHOLD=2
 ```
 
@@ -73,9 +76,12 @@ tool_app.csv
 non_app_signals.csv}
     C -->|否 - 跳过| BL[(blacklist.csv
 自动追加)]
-    C -->|是| D{是目标平台？
-android.csv / ios.csv}
-    D -->|--platform all 跳过此步| E
+    C -->|是| D{是目标框架？
+framework_flutter.csv
+framework_android.csv
+framework_react_native.csv
+framework_ios.csv}
+    D -->|--framework all 跳过此步| E
     D -->|否 - 跳过| BL
     D -->|是| E{issues 里有
 点击无响应 bug？
@@ -91,8 +97,10 @@ issue 数 / 版本 / 得分]
 | `tool_categories.csv` | 生成 GitHub 搜索 query 的关键词（宽泛，用于找仓库） |
 | `tool_app.csv` | 验证仓库是工具类 App 的关键词（细，如 pedometer/calorie/bmi） |
 | `non_app_signals.csv` | 排除非 App 仓库的信号词（plugin/library/template 等） |
-| `android.csv` | Android 平台识别词（android/gradle/apk 等） |
-| `ios.csv` | iOS 平台识别词（iphone/xcode/cupertino 等） |
+| `framework_flutter.csv` | Flutter 框架识别词（dart/pubspec/bloc/riverpod 等） |
+| `framework_android.csv` | Android Native 识别词（kotlin/gradle/jetpack compose 等） |
+| `framework_react_native.csv` | React Native 识别词（expo/metro/rn 等） |
+| `framework_ios.csv` | iOS Native 识别词（swift/swiftui/xcode 等） |
 | `interaction.csv` | 点击无响应 bug 关键词（not clickable/tap not working 等） |
 
-`--platform android` 用 `android.csv` 过滤，`--platform ios` 用 `ios.csv`，`--platform all` 两个都不过滤。
+`--framework` 选项决定使用哪个框架关键词文件过滤仓库，`--framework all` 跳过框架过滤。
