@@ -3,9 +3,16 @@
 移动端工具类 App 点击无响应 Bug 猎手 — 自动在 GitHub 上搜索 Flutter、Android Native、React Native、iOS 项目的 UI 交互 bug。
 
 ## 安装
+### project-hunter 安装
 
 ```bash
 pip install project-hunter
+```
+
+### 安装 gh 命令
+
+```bash
+brew install gh
 ```
 
 需要先登录 GitHub CLI：
@@ -13,6 +20,7 @@ pip install project-hunter
 ```bash
 gh auth login
 ```
+根据终端指引登录 github。
 
 ## 用法
 
