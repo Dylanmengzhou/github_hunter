@@ -1,6 +1,6 @@
 [project]
 name = "project-hunter"
-version = "0.2.1"
+version = "0.2.2"
 description = "移动端工具类 App UI 交互 Bug 猎手 — 支持 Flutter / Android Native / React Native / iOS"
 readme = "README.md"
 requires-python = ">=3.8"
