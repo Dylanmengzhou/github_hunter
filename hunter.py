@@ -614,7 +614,7 @@ def analyze_repo(item, framework: str, max_issue_pages: int, max_release_pages: 
     for issue in issues:
         title = issue.get("title") or ""
         body = issue.get("body") or ""
-        if is_framework_interaction_issue(title, body, framework):
+        if is_platform_interaction_issue(title, body, framework):
             interaction_issues.append({
                 "title": title,
                 "url": issue.get("html_url") or "",
